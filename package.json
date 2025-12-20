@@ -1,0 +1,32 @@
+{
+    "name": "@marouane-mjh/faker",
+    "version": "0.1.0",
+    "description": "Type-safe mock data generator for TypeScript",
+    "keywords": [
+        "mock",
+        "faker",
+        "typescript",
+        "fixtures",
+        "testing"
+    ],
+    "author": "El Moujahid Marouane",
+    "license": "MIT",
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "prepublishOnly": "npm run build"
+    }
+}
