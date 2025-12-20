@@ -152,7 +152,7 @@ export default class Faker {
     get internet(): InternetGenerator {
         return this.getOrCreateGenerator(
             "internet",
-            () => new InternetGenerator(this.context)
+            () => new InternetGenerator(this.context, this.name)
         );
     }
 
