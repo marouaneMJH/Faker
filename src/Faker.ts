@@ -357,6 +357,31 @@ export default class Faker {
     }
 
     /**
+     * Gets the current locale code.
+     *
+     * @returns The current locale code used for localized data generation.
+     *
+     * @example
+     * ```typescript
+     * const faker = new Faker({ locale: 'es' });
+     * console.log(faker.getLocale()); // 'es'
+     * ```
+     */
+    getLocale(): string {
+        return this.context.getLocale();
+    }
+
+    /**
+     * Gets the current  code.
+     *
+     * @returns The current  code used for localized data generation.
+
+     */
+    getSeed(): number {
+        return this.context.getSeed();
+    }
+
+    /**
      * Updates the locale and returns this instance for chaining.
      *
      * This method validates and sets the locale in the context, which affects
@@ -382,6 +407,25 @@ export default class Faker {
      */
     setLocale(locale: string): Faker {
         this.context.setLocale(locale);
+        return this;
+    }
+
+    /**
+     * Resets the faker to default configuration with a new random seed.
+     *
+     * @returns This Faker instance for method chaining.
+     *
+     * @example
+     * ```typescript
+     * const faker = new Faker({ seed: 12345, locale: 'es' });
+     * faker.reset();
+     * console.log(faker.getLocale()); // 'en' (default)
+     * console.log(faker.getSeed()); // New random seed
+     * ```
+     */
+    reset(): Faker {
+        this.context.reset();
+        this.registry.clear();
         return this;
     }
 

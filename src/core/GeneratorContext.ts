@@ -180,6 +180,8 @@ export default class GeneratorContext {
         const defaultSeed = Date.now();
         const defaultLocale = "en";
 
+        if (config.seed && config.seed < 0)
+            throw new TypeError("Should be positive number");
         this.seed = config.seed ?? defaultSeed;
         this.locale = config.locale ?? defaultLocale;
 
@@ -333,9 +335,10 @@ export default class GeneratorContext {
      * ```
      */
     reset(): void {
-        this.locale = this.initialConfig.locale;
-        (this as any).seed = this.initialConfig.seed; // Temporarily bypass readonly
-        this.rng = new RandomNumberGenerator(this.initialConfig.seed);
+        this.locale = "en";
+        const newSeed = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+        (this as any).seed = newSeed;
+        this.rng = new RandomNumberGenerator(newSeed);
     }
 
     /**
