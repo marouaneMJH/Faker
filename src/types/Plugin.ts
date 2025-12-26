@@ -1,5 +1,6 @@
 import type { IGenerator } from "./IGenerator";
 import type GeneratorRegistry from "../core/GeneratorRegistry";
+import { AvailableLocale } from "../data/names";
 
 /**
  * Interface for faker plugins that can be loaded into the main Faker instance.
@@ -58,5 +59,5 @@ export interface FakerConfig {
     seed?: number;
 
     /** The locale code for localized data generation. */
-    locale?: string;
+    locale?: AvailableLocale;
 }

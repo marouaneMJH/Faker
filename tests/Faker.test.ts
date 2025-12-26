@@ -1,3 +1,5 @@
+import { FakerConfig } from "./../src/types/Plugin";
+import { AvailableLocale } from "./../src/data/names/index";
 import Faker from "../src/Faker";
 import GeneratorContext from "../src/core/GeneratorContext";
 import { Plugin } from "../src/types/Plugin";
@@ -52,10 +54,10 @@ describe("Faker", () => {
         });
 
         it("should support method chaining", () => {
-            const result = faker.setSeed(12345).setLocale("ja");
+            const result = faker.setSeed(12345).setLocale("it");
             expect(result).toBe(faker);
             expect(faker.getSeed()).toBe(12345);
-            expect(faker.getLocale()).toBe("ja");
+            expect(faker.getLocale()).toBe("it");
         });
 
         it("should reset to defaults", () => {
@@ -164,7 +166,7 @@ describe("Faker", () => {
 
         it("should handle unsupported locales gracefully", () => {
             expect(() => {
-                faker.setLocale("invalid-locale");
+                faker.setLocale("invalid-locale" as AvailableLocale);
             }).toThrow();
         });
     });
@@ -214,11 +216,11 @@ describe("Faker", () => {
 
         it("should validate locale codes", () => {
             expect(() => {
-                faker.setLocale("");
+                faker.setLocale("" as AvailableLocale);
             }).toThrow();
 
             expect(() => {
-                faker.setLocale("xyz");
+                faker.setLocale("xyz" as AvailableLocale);
             }).toThrow();
         });
     });
@@ -337,7 +339,7 @@ describe("Faker", () => {
 
     describe("edge cases", () => {
         it("should handle edge case configurations", () => {
-            const edgeCases = [
+            const edgeCases: FakerConfig[] = [
                 { seed: 0 },
                 { seed: Number.MAX_SAFE_INTEGER },
                 { locale: "en" },

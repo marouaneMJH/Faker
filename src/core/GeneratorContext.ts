@@ -1,3 +1,4 @@
+import { AvailableLocale } from "../data/names";
 import RandomNumberGenerator from "./RandomNumberGenerator";
 
 /**
@@ -7,7 +8,7 @@ export interface GeneratorContextConfig {
     /** The seed value for the random number generator. */
     seed?: number;
     /** The locale code for localized data generation. */
-    locale?: string;
+    locale?: AvailableLocale;
 }
 
 /**
@@ -144,7 +145,7 @@ export default class GeneratorContext {
     private readonly seed: number;
 
     /** The locale code for localized data generation. */
-    private locale: string;
+    private locale: AvailableLocale;
 
     /** The random number generator instance. */
     private rng: RandomNumberGenerator;
@@ -244,7 +245,7 @@ export default class GeneratorContext {
      * console.log(context.getLocale()); // 'es'
      * ```
      */
-    getLocale(): string {
+    getLocale(): AvailableLocale {
         return this.locale;
     }
 
@@ -265,7 +266,7 @@ export default class GeneratorContext {
      * context.setLocale('invalid'); // Error: Unsupported locale: invalid
      * ```
      */
-    setLocale(locale: string): void {
+    setLocale(locale: AvailableLocale): void {
         this.validateLocale(locale);
         this.locale = locale;
     }

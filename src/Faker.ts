@@ -14,6 +14,7 @@ import FinanceGenerator from "./generators/FinanceGenerator";
 import DateTimeGenerator from "./generators/DateTimeGenerator";
 import TextGenerator from "./generators/TextGenerator";
 import MediaGenerator from "./generators/MediaGenerator";
+import { AvailableLocale } from "./data/names";
 
 /**
  * Main Faker class implementing the Facade pattern for simplified access to all generators.
@@ -405,7 +406,7 @@ export default class Faker {
      * console.log(faker.name.generate()); // French name
      * ```
      */
-    setLocale(locale: string): Faker {
+    setLocale(locale: AvailableLocale): Faker {
         this.context.setLocale(locale);
         return this;
     }
