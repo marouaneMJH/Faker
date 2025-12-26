@@ -7,7 +7,7 @@
  * @example
  * ```typescript
  * import { AR_LOCALE_DATA, EN_LOCALE_DATA, FR_LOCALE_DATA } from './data/names';
- * 
+ *
  * // Use specific locale data
  * console.log(EN_LOCALE_DATA.maleFirstNames);
  * console.log(FR_LOCALE_DATA.femaleFirstNames);
@@ -15,14 +15,14 @@
  */
 
 // Import all locale data
-import arNames from './ar';
-import deNames from './de';
-import enNames from './en';
-import esNames from './es';
-import frNames from './fr';
-import itNames from './it';
-import ruNames from './ru';
-import zhNames from './zh';
+import arNames from "./ar";
+import deNames from "./de";
+import enNames from "./en";
+import esNames from "./es";
+import frNames from "./fr";
+import itNames from "./it";
+import ruNames from "./ru";
+import zhNames from "./zh";
 
 // Export with consistent naming
 export const AR_LOCALE_DATA = arNames;
@@ -40,17 +40,24 @@ export const ZH_LOCALE_DATA = zhNames;
  * @example
  * ```typescript
  * import { AVAILABLE_LOCALES } from './data/names';
- * 
+ *
  * AVAILABLE_LOCALES.forEach(locale => {
  *   console.log(`Supported locale: ${locale}`);
  * });
  * ```
  */
 export const AVAILABLE_LOCALES = [
-    'ar', 'de', 'en', 'es', 'fr', 'it', 'ru', 'zh'
+    "ar",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "it",
+    "ru",
+    "zh",
 ] as const;
 
 /**
  * Type representing all available locale codes.
  */
-export type AvailableLocale = typeof AVAILABLE_LOCALES[number];
+export type AvailableLocale = (typeof AVAILABLE_LOCALES)[number];

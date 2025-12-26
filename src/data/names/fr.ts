@@ -1,4 +1,4 @@
-import type { LocaleData } from '../../core/LocaleProvider';
+import type { LocaleData } from "../../core/LocaleProvider";
 
 /**
  * French locale name data.

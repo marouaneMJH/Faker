@@ -1,4 +1,4 @@
-import type { LocaleData } from '../../core/LocaleProvider';
+import type { LocaleData } from "../../core/LocaleProvider";
 
 /**
  * Arabic locale name data.
