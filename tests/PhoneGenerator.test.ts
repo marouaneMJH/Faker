@@ -1,3 +1,4 @@
+import { AvailableCountry } from "./../src/data/countries/index";
 import PhoneGenerator, {
     type PhoneConfig,
     type MobileOptions,
@@ -234,15 +235,15 @@ describe("PhoneGenerator", () => {
     describe("error handling", () => {
         it("should throw UnsupportedCountryError for invalid country", () => {
             expect(() => {
-                generator.mobile({ country: "XX" });
+                generator.mobile({ country: "XX" as AvailableCountry });
             }).toThrow(UnsupportedCountryError);
 
             expect(() => {
-                generator.landline({ country: "INVALID" });
+                generator.landline({ country: "INVALID" as AvailableCountry });
             }).toThrow(UnsupportedCountryError);
 
             expect(() => {
-                generator.e164("ZZ");
+                generator.e164("ZZ" as AvailableCountry);
             }).toThrow(UnsupportedCountryError);
         });
     });
@@ -261,9 +262,11 @@ describe("PhoneGenerator", () => {
             expect(generator.validateConfig({ format: "invalid" as any })).toBe(
                 false
             );
-            expect(generator.validateConfig({ country: "INVALID" })).toBe(
-                false
-            );
+            expect(
+                generator.validateConfig({
+                    country: "INVALID" as AvailableCountry,
+                })
+            ).toBe(false);
             expect(generator.validateConfig(null as any)).toBe(false);
             expect(generator.validateConfig("string" as any)).toBe(false);
         });
@@ -309,7 +312,14 @@ describe("PhoneGenerator", () => {
     });
 
     describe("comprehensive format testing", () => {
-        const countries = ["MA", "US", "FR", "GB", "DE", "JP"];
+        const countries = [
+            "MA",
+            "US",
+            "FR",
+            "GB",
+            "DE",
+            "JP",
+        ] as AvailableCountry[];
 
         countries.forEach((country) => {
             it(`should generate valid phone numbers for ${country}`, () => {

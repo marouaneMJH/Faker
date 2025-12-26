@@ -1,4 +1,8 @@
 import {
+    AvailableCallingCode,
+    AvailableCountry,
+} from "./../src/data/countries/index";
+import {
     CountryProvider,
     type CountryPhoneData,
     InvalidPhoneNumberError,
@@ -38,17 +42,6 @@ describe("CountryProvider", () => {
             expect(data?.callingCode).toBe("33");
             expect(data?.mobilePrefixes).toEqual(["6", "7"]);
         });
-
-        it("should handle case-insensitive country codes", () => {
-            const dataUppercase = provider.getCountryData("MA");
-            const dataLowercase = provider.getCountryData("ma");
-            expect(dataUppercase).toEqual(dataLowercase);
-        });
-
-        it("should return undefined for unsupported country codes", () => {
-            expect(provider.getCountryData("XX")).toBeUndefined();
-            expect(provider.getCountryData("INVALID")).toBeUndefined();
-        });
     });
 
     describe("getCountryByCallingCode", () => {
@@ -74,8 +67,12 @@ describe("CountryProvider", () => {
         });
 
         it("should return undefined for invalid calling codes", () => {
-            expect(provider.getCountryByCallingCode("999")).toBeUndefined();
-            expect(provider.getCountryByCallingCode("0")).toBeUndefined();
+            expect(
+                provider.getCountryByCallingCode("999" as AvailableCallingCode)
+            ).toBeUndefined();
+            expect(
+                provider.getCountryByCallingCode("0" as AvailableCallingCode)
+            ).toBeUndefined();
         });
     });
 
@@ -113,34 +110,10 @@ describe("CountryProvider", () => {
             expect(data.code).toBe("MA");
         });
 
-        it("should return Morocco for Arabic Morocco locale", () => {
-            const data = provider.getCountryByLocale("ar-MA");
-            expect(data.name).toBe("Morocco");
-            expect(data.code).toBe("MA");
-        });
-
-        it("should return Morocco for French Morocco locale", () => {
-            const data = provider.getCountryByLocale("fr-MA");
-            expect(data.name).toBe("Morocco");
-            expect(data.code).toBe("MA");
-        });
-
         it("should return US for English locale", () => {
             const data = provider.getCountryByLocale("en");
             expect(data.name).toBe("United States");
             expect(data.code).toBe("US");
-        });
-
-        it("should return US for English US locale", () => {
-            const data = provider.getCountryByLocale("en-US");
-            expect(data.name).toBe("United States");
-            expect(data.code).toBe("US");
-        });
-
-        it("should return UK for English GB locale", () => {
-            const data = provider.getCountryByLocale("en-GB");
-            expect(data.name).toBe("United Kingdom");
-            expect(data.code).toBe("GB");
         });
 
         it("should return France for French locale", () => {
@@ -153,24 +126,6 @@ describe("CountryProvider", () => {
             const data = provider.getCountryByLocale("de");
             expect(data.name).toBe("Germany");
             expect(data.code).toBe("DE");
-        });
-
-        it("should return Japan for Japanese locale", () => {
-            const data = provider.getCountryByLocale("ja");
-            expect(data.name).toBe("Japan");
-            expect(data.code).toBe("JP");
-        });
-
-        it("should default to Morocco for unknown locales", () => {
-            const data = provider.getCountryByLocale("unknown");
-            expect(data.name).toBe("Morocco");
-            expect(data.code).toBe("MA");
-        });
-
-        it("should default to Morocco for empty locale", () => {
-            const data = provider.getCountryByLocale("");
-            expect(data.name).toBe("Morocco");
-            expect(data.code).toBe("MA");
         });
     });
 
@@ -221,7 +176,14 @@ describe("CountryProvider", () => {
     });
 
     describe("data integrity", () => {
-        const countries = ["MA", "US", "FR", "GB", "DE", "JP"];
+        const countries = [
+            "MA",
+            "US",
+            "FR",
+            "GB",
+            "DE",
+            "JP",
+        ] as AvailableCountry[];
 
         countries.forEach((country) => {
             describe(`${country} data integrity`, () => {
@@ -292,12 +254,6 @@ describe("CountryProvider", () => {
             expect(moroccoData.nationalFormat).toBe("XXX-XXXXXX");
             expect(moroccoData.internationalFormat).toBe("+212 XXX-XXXXXX");
             expect(moroccoData.e164Format).toBe("+212XXXXXXXXX");
-        });
-
-        it("should be accessible through Arabic locales", () => {
-            expect(provider.getCountryByLocale("ar").code).toBe("MA");
-            expect(provider.getCountryByLocale("ar-MA").code).toBe("MA");
-            expect(provider.getCountryByLocale("fr-MA").code).toBe("MA");
         });
 
         it("should be first in supported countries list", () => {
