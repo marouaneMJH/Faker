@@ -4,6 +4,7 @@ import {
     CountryProvider,
     type CountryPhoneData,
 } from "../core/CountryProvider";
+import { AvailableCountry } from "../data/countries";
 
 /**
  * Configuration options for phone number generation.
@@ -12,7 +13,7 @@ export interface PhoneConfig {
     /** Output format: 'e164', 'national', or 'international'. */
     format?: "e164" | "national" | "international";
     /** Country code for locale-specific phone numbers (ISO 3166-1 alpha-2). */
-    country?: string;
+    country?: AvailableCountry;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface PhoneConfig {
  */
 export interface MobileOptions {
     /** Country code for locale-specific mobile numbers. */
-    country?: string;
+    country?: AvailableCountry;
     /** Output format for the mobile number. */
     format?: "e164" | "national" | "international";
 }
@@ -30,7 +31,7 @@ export interface MobileOptions {
  */
 export interface LandlineOptions {
     /** Country code for locale-specific landline numbers. */
-    country?: string;
+    country?: AvailableCountry;
 }
 
 /**
@@ -207,7 +208,11 @@ export class PhoneGenerator implements IGenerator<PhoneConfig, string> {
      *
      * @param countryCode - Optional country code. Uses locale if not specified.
      *
-     * @returns Phone number in strict E.164 format.
+     * @returns Phone number in strict E.164 format.   "MA",
+    "US",
+    "FR",
+    "GB",
+    "DE",
      *
      * @example
      * ```typescript
@@ -223,7 +228,7 @@ export class PhoneGenerator implements IGenerator<PhoneConfig, string> {
      * console.log(generator.international()); // "+212 612-345678" (if locale is ar-MA)
      * ```
      */
-    international(countryCode?: string): string {
+    international(countryCode?: AvailableCountry): string {
         const countryData = this.resolveCountryData(countryCode);
         const digits = this.generateMobileDigits(countryData);
 
@@ -309,7 +314,7 @@ export class PhoneGenerator implements IGenerator<PhoneConfig, string> {
      * console.log(generator.e164('FR')); // "+33612345678"
      * ```
      */
-    e164(countryCode?: string): string {
+    e164(countryCode?: AvailableCountry): string {
         const countryData = this.resolveCountryData(countryCode);
         const digits = this.generateMobileDigits(countryData);
 
@@ -403,7 +408,9 @@ export class PhoneGenerator implements IGenerator<PhoneConfig, string> {
      *
      * @private
      */
-    private resolveCountryData(countryCode?: string): CountryPhoneData {
+    private resolveCountryData(
+        countryCode?: AvailableCountry
+    ): CountryPhoneData {
         if (countryCode) {
             if (!this.countryProvider.isCountrySupported(countryCode)) {
                 throw new UnsupportedCountryError(countryCode);
